@@ -24,9 +24,7 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-`include "include/zeroriscy_config.sv"
-
-module zeroriscy_register_file
+module sgpr
 #(
   parameter RV32E         = 0,
   parameter DATA_WIDTH    = 32
