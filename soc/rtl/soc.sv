@@ -8,12 +8,10 @@ module zeroriscy_soc
 	parameter RV32M               = 0
 )
 (
-	input logic           clk_i,
-	input logic           rst_ni,
-	input logic           fetch_enable_i_1,
-	input logic           fetch_enable_i_2,
-	output logic[31:0]    alu_result_c1,
-	output logic[31:0]    alu_result_c2,
+	input  logic          clk_i,
+	input  logic          rst_ni,
+	input  logic          fetch_enable_i_1,
+	input  logic          fetch_enable_i_2,
 	output logic[31:0]    mem_flag,
 	output logic[31:0]    mem_result,
 	output logic[31:0]    instr_addr1,
@@ -218,8 +216,7 @@ core1
 	
 	.fetch_enable_i(fetch_enable_i_1),
 	
-	.ext_perf_counters_i(),
-	.alu_adder_result(alu_result_c1)
+	.ext_perf_counters_i()
 );
 
 zeroriscy_core 
@@ -274,8 +271,7 @@ core2
 	
 	.fetch_enable_i(fetch_enable_i_2),
 	
-	.ext_perf_counters_i(),
-	.alu_adder_result(alu_result_c2)
+	.ext_perf_counters_i()
 );
 
 endmodule
