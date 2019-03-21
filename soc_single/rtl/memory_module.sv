@@ -1,4 +1,4 @@
-module mem_mod1
+module mem_mod
 (
   input logic            clk,
   input logic 		     rst_n,
@@ -35,7 +35,7 @@ end
 assign port_rdata_o = mem[port_addr_i];
   
 always_comb begin
-	if(port_req_i)
+    if(port_req_i)
       port_gnt_o = 1'b1;
     else
       port_gnt_o = 1'b0;
