@@ -7,8 +7,8 @@ module comparator
 	input  [31:0] w_data1,
 	input  [31:0] w_data2,
 
-	output        error,
-	output [31:0] data
+	output logic        error,
+	output logic [31:0] data
 );
 
 	always_comb
@@ -16,5 +16,4 @@ module comparator
 			data <= w_data1;
 		else
 			error <= 1'b1;
-	end
 endmodule

@@ -22,13 +22,21 @@ module tb_comparator();
 	);
 	
 	initial begin
-		$display("time | result1 | result2 | data | signal | reset");
-		$monitor("%g\t %5d\t %5d\t %5d\t %b\t %b", $time, result1, result2, data, signal, reset);
+		$display("time | data | error");
+		$monitor("%g\t %d\t %b", $time, data, error);
 
-		result1 <= 32'd10;
-		result2 <= 32'd10;
+		w_en1   <= 1;
+		w_en2   <= 1;
+		w_addr1 <= 5'd10;
+		w_addr2 <= 5'd10;
+		w_data1 <= 32'd100;
+		w_data2 <= 32'd100;
 		#5  
-		result2 <= 32'd11;
+		w_en1   <= 1;
+		#5
+		w_addr2 <= 5'd11;
+		#5
+		w_data1 <= 32'd101;
 		#5 $finish;
 	end
 endmodule
