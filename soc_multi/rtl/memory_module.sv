@@ -1,7 +1,7 @@
 module mem_mod
 (
   input logic            clk,
-  input logic 		     rst_n,
+  input logic  	         rst_n,
 
   input logic            port_req_i,
   output logic           port_gnt_o,
