@@ -8,7 +8,7 @@ module tb_soc_single;
 	logic [31:0] mem_result;
 	logic [31:0] inst_addr;
 
-	zeroriscy_soc soc
+	zeroriscy_soc dut
 	(
 		.clk_i(clk_i),
 		.rst_ni(rst_ni),
@@ -23,7 +23,7 @@ module tb_soc_single;
       
 	initial begin
 		$display(" time  |   inst_addr  |   mem_flag    |    mem_result   |\n");
-		$monitor ("%5t  |   %h   |    %h   |    %h     |", $time, inst_addr, mem_flag, mem_result);
+		$monitor ("%5t  |   %h   |    %h   |    %d     |", $time, inst_addr, mem_flag, mem_result);
 		 
 		rst_ni = 0;
 		fetch_en_i = 1;
@@ -33,8 +33,8 @@ module tb_soc_single;
 		#1000 $finish; // timeout if mem_flag never rises
 	end
 	
-	always @*
-		if (mem_flag)
-			#5 $finish;
+	//always @*
+	//	if (mem_flag)
+	//		#5 $finish;
 
 endmodule

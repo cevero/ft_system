@@ -63,97 +63,97 @@ module zeroriscy_soc
 	logic           debug_halt_i;
 	logic           debug_resume_i;
 
-mem_mod inst_mem
-(
-	.clk(clk_i),
-	.rst_n(1'b1),
+	mem_mod inst_mem
+	(
+		.clk(clk_i),
+		.rst_n(1'b1),
+		
+		.port_req_i(instr_req_o),
+		.port_gnt_o(instr_gnt_i),
+		.port_rvalid_o(instr_rvalid_i),
+		.port_addr_i(instr_addr_o),
+		.port_we_i(1'b0),
+		.port_rdata_o(instr_rdata_i),
+		.port_wdata_i(32'b0),
+		
+		.mem_flag(),
+		.mem_result()
+	);
 	
-	.port_req_i(instr_req_o),
-	.port_gnt_o(instr_gnt_i),
-	.port_rvalid_o(instr_rvalid_i),
-	.port_addr_i(instr_addr_o),
-	.port_we_i(1'b0),
-	.port_rdata_o(instr_rdata_i),
-	.port_wdata_i(32'b0),
+	mem_mod data_mem
+	(
+		.clk(clk_i),
+		.rst_n(1'b1),
+		
+		.port_req_i(data_req_o),
+		.port_gnt_o(data_gnt_i),
+		.port_rvalid_o(data_rvalid_i),
+		.port_addr_i(data_addr_o),
+		.port_we_i(data_we_o),
+		.port_rdata_o(data_rdata_i),
+		.port_wdata_i(data_wdata_o),
+		
+		.mem_flag(mem_flag),
+		.mem_result(mem_result)
+	);
+	  
+	zeroriscy_core 
+	#(
+		.N_EXT_PERF_COUNTERS(N_EXT_PERF_COUNTERS), 
+		.RV32E(RV32E), 
+		.RV32M(RV32M)
+	) 
+	core
+	(
+		.clk_i(clk_i),
+		.rst_ni(rst_ni),
+		
+		.clock_en_i(clock_en_i),    // enable clock, otherwise it is gated
+		.test_en_i(test_en_i),     // enable all clock gates for testing
+		
+		.core_id_i(core_id_i),
+		.cluster_id_i(cluster_id_i),
+		.boot_addr_i(boot_addr_i),
+		
+		.instr_req_o(instr_req_o),
+		.instr_gnt_i(instr_gnt_i),
+		.instr_rvalid_i(instr_rvalid_i),
+		.instr_addr_o(instr_addr_o),
+		.instr_rdata_i(instr_rdata_i),
+		
+		
+		.data_req_o(data_req_o),
+		.data_gnt_i(data_gnt_i),
+		.data_rvalid_i(data_rvalid_i),
+		.data_we_o(data_we_o),
+		.data_be_o(data_be_o),
+		.data_addr_o(data_addr_o),
+		.data_wdata_o(data_wdata_o),
+		.data_rdata_i(data_rdata_i),
+		.data_err_i(data_err_i),
+		
+		
+		.irq_i(irq_i),                 // level sensitive IR lines
+		.irq_id_i(irq_id_i),
+		.irq_ack_o(irq_ack_o),             // irq ack
+		.irq_id_o(irq_id_o),
+		
+		
+		.debug_req_i(debug_req_i),
+		.debug_gnt_o(debug_gnt_o),
+		.debug_rvalid_o(debug_rvalid_o),
+		.debug_addr_i(debug_addr_i),
+		.debug_we_i(debug_we_i),
+		.debug_wdata_i(debug_wdata_i),
+		.debug_rdata_o(debug_rdata_o),
+		.debug_halted_o(debug_halted_o),
+		.debug_halt_i(debug_halt_i),
+		.debug_resume_i(debug_resume_i),
+		
+		
+		.fetch_enable_i(fetch_enable_i),
 	
-	.mem_flag(),
-	.mem_result()
-);
-
-mem_mod data_mem
-(
-	.clk(clk_i),
-	.rst_n(1'b1),
+		.ext_perf_counters_i()
+	);
 	
-	.port_req_i(data_req_o),
-	.port_gnt_o(data_gnt_i),
-	.port_rvalid_o(data_rvalid_i),
-	.port_addr_i(data_addr_o),
-	.port_we_i(data_we_o),
-	.port_rdata_o(data_rdata_i),
-	.port_wdata_i(data_wdata_o),
-	
-	.mem_flag(mem_flag),
-	.mem_result(mem_result)
-);
-  
-zeroriscy_core 
-#(
-	.N_EXT_PERF_COUNTERS(N_EXT_PERF_COUNTERS), 
-	.RV32E(RV32E), 
-	.RV32M(RV32M)
-) 
-core
-(
-	.clk_i(clk_i),
-	.rst_ni(rst_ni),
-	
-	.clock_en_i(clock_en_i),    // enable clock, otherwise it is gated
-	.test_en_i(test_en_i),     // enable all clock gates for testing
-	
-	.core_id_i(core_id_i),
-	.cluster_id_i(cluster_id_i),
-	.boot_addr_i(boot_addr_i),
-	
-	.instr_req_o(instr_req_o),
-	.instr_gnt_i(instr_gnt_i),
-	.instr_rvalid_i(instr_rvalid_i),
-	.instr_addr_o(instr_addr_o),
-	.instr_rdata_i(instr_rdata_i),
-	
-	
-	.data_req_o(data_req_o),
-	.data_gnt_i(data_gnt_i),
-	.data_rvalid_i(data_rvalid_i),
-	.data_we_o(data_we_o),
-	.data_be_o(data_be_o),
-	.data_addr_o(data_addr_o),
-	.data_wdata_o(data_wdata_o),
-	.data_rdata_i(data_rdata_i),
-	.data_err_i(data_err_i),
-	
-	
-	.irq_i(irq_i),                 // level sensitive IR lines
-	.irq_id_i(irq_id_i),
-	.irq_ack_o(irq_ack_o),             // irq ack
-	.irq_id_o(irq_id_o),
-	
-	
-	.debug_req_i(debug_req_i),
-	.debug_gnt_o(debug_gnt_o),
-	.debug_rvalid_o(debug_rvalid_o),
-	.debug_addr_i(debug_addr_i),
-	.debug_we_i(debug_we_i),
-	.debug_wdata_i(debug_wdata_i),
-	.debug_rdata_o(debug_rdata_o),
-	.debug_halted_o(debug_halted_o),
-	.debug_halt_i(debug_halt_i),
-	.debug_resume_i(debug_resume_i),
-	
-	
-	.fetch_enable_i(fetch_enable_i),
-
-	.ext_perf_counters_i()
-);
-
 endmodule
