@@ -1,7 +1,7 @@
 module mem_mod
 (
   input logic            clk,
-  input logic  	         rst_n,
+  input logic 		     rst_n,
 
   input logic            port_req_i,
   output logic           port_gnt_o,
@@ -19,9 +19,9 @@ module mem_mod
 
 initial begin
   for(int i = 0; i != 255; i = i + 1) begin
-    mem[i] = 32'bX;
+    mem[i] = 32'bx;
   end
-  $readmemb("rtl/instmem.bin",mem);
+  $readmemb("rtl/fibonacci.bin",mem);
 end
   
 always_ff @(posedge clk) begin
