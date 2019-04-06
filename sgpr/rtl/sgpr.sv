@@ -24,9 +24,9 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-module sgpr
+module zeroriscy_register_file
 #(
-  parameter RV32E         = 1,
+  parameter RV32E         = 0,
   parameter DATA_WIDTH    = 32
 )
 (
@@ -48,15 +48,14 @@ module sgpr
   // Write port W1
   input  logic [4:0]              waddr_a_i,
   input  logic [DATA_WIDTH-1:0]   wdata_a_i,
-  input  logic                    we_a_i,
+  input  logic                    we_a_i
 
-  // under test
-  output logic [15:0][31:0] rf_reg
 );
 
   localparam    ADDR_WIDTH = RV32E ? 4 : 5;
   localparam    NUM_WORDS  = 2**ADDR_WIDTH;
 
+  logic [NUM_WORDS-1:0][DATA_WIDTH-1:0] rf_reg;
   logic [NUM_WORDS-1:0][DATA_WIDTH-1:0] rf_reg_tmp;
   logic [NUM_WORDS-1:0]                 we_a_dec;
 
