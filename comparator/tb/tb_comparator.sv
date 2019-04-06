@@ -1,42 +1,65 @@
 module tb_comparator();
-
-	logic        w_en1;
-	logic        w_en2;
-	logic        error;
-	logic [4:0]  w_addr1;
-	logic [4:0]  w_addr2;
-	logic [31:0] w_data1;
-	logic [31:0] w_data2;
-	logic [31:0] data;  
+	logic        we_a_i;
+	logic        we_b_i;
+	logic [4:0]  addr_a_i;
+	logic [4:0]  addr_b_i;
+	logic [31:0] data_a_i;
+	logic [31:0] data_b_i;
+	logic [4:0]  addr_o;
+	logic [31:0] data_o;
+	logic        signal;
 	
 	comparator dut
 	(
-		.w_en1   ( w_en1   ),
-		.w_en2   ( w_en2   ),
-		.w_addr1 ( w_addr1 ),
-		.w_addr2 ( w_addr2 ),
-		.w_data1 ( w_data1 ),
-		.w_data2 ( w_data2 ),
-		.error   ( error   ),
-		.data    ( data    )
+		.we_a_i(we_a_i),
+		.we_b_i(we_b_i),
+		.addr_a_i(addr_a_i),
+		.addr_b_i(addr_b_i),
+		.data_a_i(data_a_i),
+		.data_b_i(data_b_i),
+		.addr_o(addr_o),
+		.data_o(data_o),
+		.signal(signal)
 	);
 	
 	initial begin
-		$display("time | data | error");
-		$monitor("%g\t %d\t %b", $time, data, error);
+		$display("time | addr | data | signal |");
+		$monitor("%4t | %4d | %4d | %6b |", $time, addr_o, data_o, signal);
 
-		w_en1   <= 1;
-		w_en2   <= 1;
-		w_addr1 <= 5'd10;
-		w_addr2 <= 5'd10;
-		w_data1 <= 32'd100;
-		w_data2 <= 32'd100;
-		#5  
-		w_en1   <= 1;
-		#5
-		w_addr2 <= 5'd11;
-		#5
-		w_data1 <= 32'd101;
-		#5 $finish;
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b1;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd100;
+		data_b_i <= 32'd100;
+		#2  
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b0;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd100;
+		data_b_i <= 32'd100;
+		#2  
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b1;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd11;
+		data_a_i <= 32'd100;
+		data_b_i <= 32'd100;
+		#2  
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b1;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd120;
+		data_b_i <= 32'd100;
+		#2  
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b1;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd120;
+		data_b_i <= 32'd120;
+		#2 $finish;
 	end
 endmodule

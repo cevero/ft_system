@@ -1,19 +1,24 @@
 module comparator
+#(
+	parameter DATA_WIDTH = 32
+)
 (
-	input         w_en1,
-	input         w_en2,
-	input  [4:0]  w_addr1,
-	input  [4:0]  w_addr2,
-	input  [31:0] w_data1,
-	input  [31:0] w_data2,
-
-	output logic        error,
-	output logic [31:0] data
+	input                         we_a_i,
+	input                         we_b_i,
+	input  [4:0]                  addr_a_i,
+	input  [4:0]                  addr_b_i,
+	input  [DATA_WIDTH-1:0]       data_a_i,
+	input  [DATA_WIDTH-1:0]       data_b_i,
+	output logic [4:0]            addr_o,
+	output logic [DATA_WIDTH-1:0] data_o,
+	output logic                  signal
 );
 
 	always_comb
-		if ((w_en1 == w_en2) == 1'b1 && w_addr1 == w_addr2 && w_data1 == w_data2)
-			data <= w_data1;
-		else
-			error <= 1'b1;
+		if (we_a_i == we_b_i && addr_a_i == addr_b_i && data_a_i == data_b_i) begin
+			addr_o <= addr_a_i;
+			data_o <= data_a_i;
+			signal <= 1'b0;
+		end else
+			signal <= 1'b1;
 endmodule
