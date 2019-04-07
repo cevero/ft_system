@@ -1,3 +1,0 @@
-[submodule "ip/zero-riscy"]
-	path = ip/zero-riscy
-	url = https://github.com/cevero/zero-riscy
