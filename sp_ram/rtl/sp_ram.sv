@@ -20,22 +20,20 @@ module sp_ram
     initial begin
         for(int i = 0; i != 255; i = i + 1)
             mem[i] = 32'bx;
-        $readmemb("../soc_utils/fibonacci.bin",mem);
+        $readmemb("../soc_utils/fibonacci.bin", mem);
     end
       
-    always_ff @(posedge clk) begin
+    always_ff @(posedge clk)
         if (port_we_i)
             mem[port_addr_i] <= port_wdata_i;
-    end
-      
+
     assign port_rdata_o = mem[port_addr_i];
       
-    always_comb begin
+    always_comb 
         if(port_req_i)
             port_gnt_o = 1'b1;
         else
             port_gnt_o = 1'b0;
-    end
 
     always_ff @(posedge clk, negedge rst_n)
         if (rst_n == 1'b0)

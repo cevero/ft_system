@@ -3,8 +3,6 @@ module tb_soc_multi;
 	logic        rst_ni;
 	logic        fetch_enable_i_1;
 	logic        fetch_enable_i_2;
-	logic [31:0] alu_result_c1;
-	logic [31:0] alu_result_c2;
 	logic [31:0] mem_flag;
 	logic [31:0] mem_result;
 	logic [31:0] instr_addr1;
@@ -16,8 +14,6 @@ module tb_soc_multi;
 		.rst_ni(rst_ni),
 		.fetch_enable_i_1(fetch_enable_i_1),
 		.fetch_enable_i_2(fetch_enable_i_2),
-		.alu_result_c1(alu_result_c1),
-		.alu_result_c2(alu_result_c2),
 		.mem_flag(mem_flag),
 		.mem_result(mem_result),
 		.instr_addr1(instr_addr1),
@@ -28,8 +24,8 @@ module tb_soc_multi;
 	always #5 clk_i = ~clk_i;
       
 	initial begin
-		$display("time | inst_addr1 | inst_addr2 | alu_result_c1 | alu_result_c2 | mem_flag | mem_result |\n");
-		$monitor ("%4d | %10h | %10h | %13d | %13d | %8b | %10d |", $time, instr_addr1, instr_addr2, alu_result_c1, alu_result_c2, mem_flag, mem_result);
+		$display("time | inst_addr1 | inst_addr2 | mem_flag | mem_result |\n");
+		$monitor ("%4d | %10h | %10h | %8b | %10d |", $time, instr_addr1, instr_addr2, mem_flag, mem_result);
 		 
 		rst_ni = 0;
 		fetch_enable_i_1 = 1;

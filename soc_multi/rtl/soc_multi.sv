@@ -1,5 +1,4 @@
-// Code your testbench here
-// or browse Examples
+`include "../dp_ram/rtl/dp_ram.sv"
 
 module zeroriscy_soc
 #(
@@ -12,8 +11,6 @@ module zeroriscy_soc
 	input  logic        rst_ni,
 	input  logic        fetch_enable_i_1,
 	input  logic        fetch_enable_i_2,
-	output logic [31:0] alu_result_c1,
-	output logic [31:0] alu_result_c2,
 	output logic [31:0] mem_flag,
 	output logic [31:0] mem_result,
 	output logic [31:0] instr_addr1,
@@ -117,7 +114,7 @@ module zeroriscy_soc
 	logic           debug_halt_i_2;
 	logic           debug_resume_i_2;
 	
-	mem_mod inst_mem
+	dp_ram inst_mem
 	(
 		.clk(clk_i),
 		.rst_n(1'b1),
@@ -142,7 +139,7 @@ module zeroriscy_soc
 		.mem_result()
 	);
 	
-	mem_mod data_mem
+	dp_ram data_mem
 	(
 		.clk(clk_i),
 		.rst_n(1'b1),
@@ -223,8 +220,7 @@ module zeroriscy_soc
 		
 		.fetch_enable_i(fetch_enable_i_1),
 		
-		.ext_perf_counters_i(),
-		.alu_adder_result(alu_result_c1)
+		.ext_perf_counters_i()
 	);
 	
 	zeroriscy_core 
@@ -283,7 +279,6 @@ module zeroriscy_soc
 		
 		.fetch_enable_i(fetch_enable_i_2),
 		
-		.ext_perf_counters_i(),
-		.alu_adder_result(alu_result_c2)
+		.ext_perf_counters_i()
 	);
 endmodule
