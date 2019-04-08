@@ -20,7 +20,7 @@ module sp_ram
     initial begin
         for(int i = 0; i != 255; i = i + 1)
             mem[i] = 32'bx;
-        $readmemb("rtl/fibonacci.bin",mem);
+        $readmemb("../soc_utils/fibonacci.bin",mem);
     end
       
     always_ff @(posedge clk) begin
