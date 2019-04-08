@@ -1,6 +1,7 @@
 # Cevero's fault tolerance system
+
 ## comparator
-	Contains the comparator block. Evaluate if the write enable signal, 
+  Contains the comparator block. Evaluate if the write enable signal, 
 address and data are the same value.
 
 ## comp_sgpr
