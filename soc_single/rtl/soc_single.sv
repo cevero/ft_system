@@ -1,5 +1,5 @@
-// Code your testbench here
-// or browse Examples
+`include "../sp_ram/rtl/sp_ram.sv"
+`include "../sp_ram/rtl/sp_ram.sv"
 
 module zeroriscy_soc
 #(
@@ -63,7 +63,7 @@ module zeroriscy_soc
 	logic           debug_halt_i;
 	logic           debug_resume_i;
 
-	mem_mod inst_mem
+	sp_ram inst_mem
 	(
 		.clk(clk_i),
 		.rst_n(1'b1),
@@ -80,7 +80,7 @@ module zeroriscy_soc
 		.mem_result()
 	);
 	
-	mem_mod data_mem
+	sp_ram data_mem
 	(
 		.clk(clk_i),
 		.rst_n(1'b1),

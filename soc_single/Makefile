@@ -22,8 +22,8 @@ compile:
         vmap $(WORK) $(WORK); \
     fi
 # Compiles all verilog files in the "default" folders
-	$(CC) -sv -mfcu ip/zero-riscy/include/*.sv ip/zero-riscy/*.sv \
-		rtl/*.sv tb/*.sv +incdir+ip/zero-riscy/include
+	$(CC) -sv -mfcu ../ip/zero-riscy/include/*.sv ../ip/zero-riscy/*.sv \
+		../soc_utils/*.sv rtl/*.sv tb/*.sv +incdir+../ip/zero-riscy/include
 
 # Executes the simulation in batch mode using the commands on the script/run.do
 # file.
