@@ -1,3 +1,6 @@
+`include "../sgpr/rtl/sgpr.sv"
+`include "../comparator/rtl/comparator.sv"
+
 module comp_sgpr
 #(
 	parameter DATA_WIDTH = 32
