@@ -1,8 +1,0 @@
-!.keep
-build/*
-build/!.keep
-*.ini
-*.log
-*.vcd
-work
-transcript
