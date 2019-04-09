@@ -1,4 +1,4 @@
-module tb_soc_multi;
+module tb_soc_multi_dp_ram;
 	logic        clk_i;
 	logic        rst_ni;
 	logic        fetch_enable_i_1;
@@ -8,7 +8,7 @@ module tb_soc_multi;
 	logic [31:0] instr_addr1;
 	logic [31:0] instr_addr2;
 
-	zeroriscy_soc dut
+	soc dut
 	(
 		.clk_i(clk_i),
 		.rst_ni(rst_ni),

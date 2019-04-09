@@ -1,6 +1,6 @@
 `include "../dp_ram/rtl/dp_ram.sv"
 
-module zeroriscy_soc
+module soc
 #(
 	parameter N_EXT_PERF_COUNTERS = 0,
 	parameter RV32E               = 0,
