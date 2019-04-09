@@ -1,5 +1,4 @@
 `include "../sp_ram/rtl/sp_ram.sv"
-`include "../sp_ram/rtl/sp_ram.sv"
 
 module zeroriscy_soc
 #(
