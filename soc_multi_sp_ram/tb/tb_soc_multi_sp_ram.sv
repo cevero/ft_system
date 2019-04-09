@@ -4,33 +4,52 @@ module tb_soc_multi_sp_ram;
     logic        rst_ni;
     logic        fetch_en_i;
 
+    logic        signal;
     logic [31:0] mem_flag;
     logic [31:0] mem_result;
     logic [31:0] instr_addr_1;
     logic [31:0] instr_addr_2;
+
+    logic        we_1;
+    logic        we_2;
+    logic [31:0] addr_1;
+    logic [31:0] addr_2;
+    logic [31:0] data_1;
+    logic [31:0] data_2;
 
     soc dut
     (
         .clk_i(clk_i),
         .rst_ni(rst_ni),
         .fetch_enable_i(fetch_en_i),
+
+        .signal(signal),
         .mem_flag(mem_flag),
         .mem_result(mem_result),
         .instr_addr_1(instr_addr_1),
-        .instr_addr_2(instr_addr_2)
+        .instr_addr_2(instr_addr_2),
+
+        .we_1(we_1),
+        .we_2(we_2),
+        .addr_1(addr_1),
+        .addr_2(addr_2),
+        .data_1(data_1),
+        .data_2(data_2)
     );
 
-    initial clk_i = 1;
+    initial clk_i = 0;
     always #5 clk_i = ~clk_i;
       
     initial begin
-        $display(" time | instr_addr_1 | instr_addr_2 | mem_flag | mem_result |\n");
-        $monitor ("%4t  | %12h | %12h | %8b | %10d |", $time, instr_addr_1, instr_addr_2, mem_flag, mem_result);
+        $display(" time | instr_addr_1 | instr_addr_2 | mem_flag | mem_result | signal | we_1 | we_2 | addr_1 | addr_2 | data_1 | data_2 |\n");
+        $monitor ("%4t  | %12h | %12h | %8b | %10d | %6b | %4b | %4b | %6h | %6h | %6d | %6d |", $time, instr_addr_1, instr_addr_2, mem_flag, mem_result, signal, we_1, we_2, addr_1, addr_2, data_1, data_2);
          
         rst_ni = 0;
-        fetch_en_i = 1;
-        #5;
+        fetch_en_i = 0;
+        #20;
         rst_ni = 1;
+        fetch_en_i = 1;
+        #10;
         
         #1000 $finish; // timeout if mem_flag never rises
     end
