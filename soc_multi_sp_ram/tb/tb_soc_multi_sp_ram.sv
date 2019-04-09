@@ -41,8 +41,8 @@ module tb_soc_multi_sp_ram;
     always #5 clk_i = ~clk_i;
       
     initial begin
-        $display(" time | instr_addr_1 | instr_addr_2 | mem_flag | mem_result | signal | we_1 | we_2 | addr_1 | addr_2 | data_1 | data_2 |\n");
-        $monitor ("%4t  | %12h | %12h | %8b | %10d | %6b | %4b | %4b | %6h | %6h | %6d | %6d |", $time, instr_addr_1, instr_addr_2, mem_flag, mem_result, signal, we_1, we_2, addr_1, addr_2, data_1, data_2);
+        $display("time | inst_addr_1 | inst_addr_2 | mem_flag | mem_result || we_1 | we_2 | addr_1 | addr_2 | data_1 | data_2 | sig |\n");
+        $monitor ("%4t | %11h | %11h | %8b | %10d || %4b | %4b | %6h | %6h | %6d | %6d | %3b |", $time, instr_addr_1, instr_addr_2, mem_flag, mem_result, we_1, we_2, addr_1, addr_2, data_1, data_2, signal);
          
         rst_ni = 0;
         fetch_en_i = 0;
