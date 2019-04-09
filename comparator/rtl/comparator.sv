@@ -4,12 +4,12 @@ module comparator
     parameter DATA_WIDTH = 32
 )
 (
-    input                         we_a_i,
-    input                         we_b_i,
-    input  [ADDR_WIDTH-1:0]       addr_a_i,
-    input  [ADDR_WIDTH-1:0]       addr_b_i,
-    input  [DATA_WIDTH-1:0]       data_a_i,
-    input  [DATA_WIDTH-1:0]       data_b_i,
+    input  logic                  we_a_i,
+    input  logic                  we_b_i,
+    input  logic [ADDR_WIDTH-1:0] addr_a_i,
+    input  logic [ADDR_WIDTH-1:0] addr_b_i,
+    input  logic [DATA_WIDTH-1:0] data_a_i,
+    input  logic [DATA_WIDTH-1:0] data_b_i,
     output logic [ADDR_WIDTH-1:0] addr_o,
     output logic [DATA_WIDTH-1:0] data_o,
     output logic                  signal
