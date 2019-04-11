@@ -24,78 +24,74 @@
 //                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-module zeroriscy_register_file
+module sgpr
 #(
-  parameter RV32E         = 0,
-  parameter DATA_WIDTH    = 32
+    parameter RV32E         = 0,
+    parameter DATA_WIDTH    = 32
 )
 (
-  // Clock and Reset
-  input  logic                   clk,
-  input  logic                   rst_n,
-
-  input  logic                   test_en_i,
-
-  //Read port R1
-  input  logic [4:0]             raddr_a_i,
-  output logic [DATA_WIDTH-1:0]  rdata_a_o,
-
-  //Read port R2
-  input  logic [4:0]             raddr_b_i,
-  output logic [DATA_WIDTH-1:0]  rdata_b_o,
-
-
-  // Write port W1
-  input  logic [4:0]              waddr_a_i,
-  input  logic [DATA_WIDTH-1:0]   wdata_a_i,
-  input  logic                    we_a_i
-
+    // Clock and Reset
+    input  logic                   clk,
+    input  logic                   rst_n,
+    
+    input  logic                   test_en_i,
+    
+    //Read port R1
+    input  logic [4:0]             raddr_a_i,
+    output logic [DATA_WIDTH-1:0]  rdata_a_o,
+    
+    //Read port R2
+    input  logic [4:0]             raddr_b_i,
+    output logic [DATA_WIDTH-1:0]  rdata_b_o,
+    
+    
+    // Write port W1
+    input  logic [4:0]              waddr_a_i,
+    input  logic [DATA_WIDTH-1:0]   wdata_a_i,
+    input  logic                    we_a_i,
+    
+    // replay signal
+    input  logic                    replay
 );
+    
+    localparam    ADDR_WIDTH = RV32E ? 4 : 5;
+    localparam    NUM_WORDS  = 2**ADDR_WIDTH;
+    
+    logic [NUM_WORDS-1:0][DATA_WIDTH-1:0] rf_reg;
+    logic [NUM_WORDS-1:0][DATA_WIDTH-1:0] rf_reg_tmp;
+    logic [NUM_WORDS-1:0]                 we_a_dec;
+    
+    always_comb
+        for (int i = 0; i < NUM_WORDS; i++)
+            if (waddr_a_i == i)
+                we_a_dec[i] = we_a_i;
+            else
+                we_a_dec[i] = 1'b0;
+    
+    genvar i;
+    generate
+        // loop from 1 to NUM_WORDS-1 as R0 is nil
+        for (i = 1; i < NUM_WORDS; i++)
+            always_ff @(posedge clk, negedge rst_n)
+                if (rst_n==1'b0)
+                    rf_reg_tmp[i] <= 'b0;
+                else if (we_a_dec[i])
+                    rf_reg_tmp[i] <= wdata_a_i;
+    
+        // R0 is nil
+        assign rf_reg[0] = '0;
+        assign rf_reg[NUM_WORDS-1:1] = rf_reg_tmp[NUM_WORDS-1:1];
+    endgenerate
 
-  localparam    ADDR_WIDTH = RV32E ? 4 : 5;
-  localparam    NUM_WORDS  = 2**ADDR_WIDTH;
-
-  logic [NUM_WORDS-1:0][DATA_WIDTH-1:0] rf_reg;
-  logic [NUM_WORDS-1:0][DATA_WIDTH-1:0] rf_reg_tmp;
-  logic [NUM_WORDS-1:0]                 we_a_dec;
-
-  always_comb
-  begin : we_a_decoder
-    for (int i = 0; i < NUM_WORDS; i++) begin
-      if (waddr_a_i == i)
-        we_a_dec[i] = we_a_i;
-      else
-        we_a_dec[i] = 1'b0;
-    end
-  end
-
-
-  genvar i;
-  generate
-
-    // loop from 1 to NUM_WORDS-1 as R0 is nil
-    for (i = 1; i < NUM_WORDS; i++)
-    begin : rf_gen
-
-      always_ff @(posedge clk, negedge rst_n)
-      begin : register_write_behavioral
-        if (rst_n==1'b0) begin
-          rf_reg_tmp[i] <= 'b0;
-        end else begin
-          if (we_a_dec[i])
-            rf_reg_tmp[i] <= wdata_a_i;
-        end
-      end
-
-    end
-
-    // R0 is nil
-    assign rf_reg[0] = '0;
-    assign rf_reg[NUM_WORDS-1:1] = rf_reg_tmp[NUM_WORDS-1:1];
-
-  endgenerate
-
-  assign rdata_a_o = rf_reg[raddr_a_i];
-  assign rdata_b_o = rf_reg[raddr_b_i];
+    //genvar j;
+    //generate
+    //    for (j = 1; j < NUM_WORDS; j++)
+    //        always_ff @(posedge clk)
+    //            if (replay)
+    //               rdata_a_o = rf_reg[j]; 
+    //endgenerate
+    
+    assign rdata_a_o = rf_reg[raddr_a_i];
+    assign rdata_b_o = rf_reg[raddr_b_i];
 
 endmodule
