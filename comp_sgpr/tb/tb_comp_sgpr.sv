@@ -38,22 +38,33 @@ module tb_comp_sgpr();
         .signal(signal)
     );
     
-    initial clk = 1;
-    initial rst_n = 1;
-    always #1 clk = ~clk;
+    initial clk = 0;
+    initial rst_n = 0;
+    always #5 clk = ~clk;
     initial begin
         $display("time | clk | raddr_a_i | raddr_b_i | rdata_a_i | rdata_b_i | signal |");
         $monitor("%4t | %3b | %9d | %9d | %9d | %9d | %6d |", $time, clk, raddr_a_i, raddr_b_i, rdata_a_o, rdata_b_o, signal);
 
         we_a_i    <= 1'b1;
         we_b_i    <= 1'b1;
-        addr_a_i  <= 5'd10;
-        addr_b_i  <= 5'd10;
+        addr_a_i  <= 5'd11;
+        addr_b_i  <= 5'd11;
         data_a_i  <= 32'd100;
         data_b_i  <= 32'd100;
         raddr_a_i <= 5'd10;
         raddr_b_i <= 5'd10;
-        #4  
+        #10 
+        rst_n = 1;
+
+        we_a_i    <= 1'b1;
+        we_b_i    <= 1'b1;
+        addr_a_i  <= 5'd11;
+        addr_b_i  <= 5'd11;
+        data_a_i  <= 32'd100;
+        data_b_i  <= 32'd100;
+        raddr_a_i <= 5'd10;
+        raddr_b_i <= 5'd10;
+        #10 
         we_a_i    <= 1'b1;
         we_b_i    <= 1'b1;
         addr_a_i  <= 5'd11;
@@ -62,7 +73,7 @@ module tb_comp_sgpr();
         data_b_i  <= 32'd100;
         raddr_a_i <= 5'd11;
         raddr_b_i <= 5'd10;
-        #4  
+        #10 
         we_a_i    <= 1'b1;
         we_b_i    <= 1'b1;
         addr_a_i  <= 5'd11;
@@ -71,15 +82,15 @@ module tb_comp_sgpr();
         data_b_i  <= 32'd100;
         raddr_a_i <= 5'd10;
         raddr_b_i <= 5'd10;
-        #4  
+        #10 
         we_a_i    <= 1'b1;
         we_b_i    <= 1'b1;
         addr_a_i  <= 5'd10;
         addr_b_i  <= 5'd10;
-        data_a_i  <= 32'd100;
-        data_b_i  <= 32'd100;
+        data_a_i  <= 32'd120;
+        data_b_i  <= 32'd120;
         raddr_a_i <= 5'd10;
         raddr_b_i <= 5'd10;
-        #4 $finish;
+        #10 $finish;
     end
 endmodule
