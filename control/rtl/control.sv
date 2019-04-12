@@ -5,7 +5,7 @@ module control
 (
     input  logic                  clk,
     input  logic                  error_i,
-    output logic                  done_o,
+    output logic                  fetch_block_o,
     output logic [ADDR_WIDTH-1:0] replay_addr_o
 );
 
@@ -35,5 +35,5 @@ module control
             done <= 1;
 
     assign replay_addr_o = addr;
-    assign done_o = done;
+    assign fetch_block_o = done;
 endmodule
