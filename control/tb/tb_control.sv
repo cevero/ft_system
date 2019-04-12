@@ -26,7 +26,11 @@ module tb_control();
 		error_i <= 1;
         #10
         error_i <= 0;
+        #320
+        error_i <= 1;
+        #10
+        error_i <= 0;
             
-		#600 $finish;
+		#650 $finish;
 	end
 endmodule

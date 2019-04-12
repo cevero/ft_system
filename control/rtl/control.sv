@@ -13,7 +13,7 @@ module control
 
     logic                  done;
     logic                  state;
-    logic [ADDR_WIDTH-1:0] temp;
+    logic [ADDR_WIDTH-1:0] iterator;
     logic [ADDR_WIDTH-1:0] addr;
 
     always_comb 
@@ -24,22 +24,15 @@ module control
 
     initial done = 1;
 
-    genvar i;
-    generate
-    for (i = 1; i < NUM_REG; i++)
-        always_ff @(posedge clk)
-            // error detected - init replay system
-            if (state && done) begin
-                temp <= 1;
-                done <= 0;
-            // replay
-            end else if (temp < NUM_REG) begin
-                addr = i;
-                temp = temp + 1;
-            // complete
-            end else if (temp == NUM_REG)
-                done <= 1;
-    endgenerate
+    always_ff @(posedge clk) 
+        if (state && done) begin
+            iterator <= 0;
+            done <= 0;
+        end else if (iterator < NUM_REG-1) begin
+            iterator = iterator + 1;
+            addr = iterator;
+        end else
+            done <= 1;
 
     assign replay_addr_o = addr;
     assign done_o = done;
