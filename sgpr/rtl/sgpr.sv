@@ -48,10 +48,7 @@ module sgpr
     // Write port W1
     input  logic [4:0]              waddr_a_i,
     input  logic [DATA_WIDTH-1:0]   wdata_a_i,
-    input  logic                    we_a_i,
-    
-    // replay signal
-    input  logic                    replay
+    input  logic                    we_a_i
 );
     
     localparam    ADDR_WIDTH = RV32E ? 4 : 5;
@@ -82,14 +79,6 @@ module sgpr
         assign rf_reg[0] = '0;
         assign rf_reg[NUM_WORDS-1:1] = rf_reg_tmp[NUM_WORDS-1:1];
     endgenerate
-
-    //genvar j;
-    //generate
-    //    for (j = 1; j < NUM_WORDS; j++)
-    //        always_ff @(posedge clk)
-    //            if (replay)
-    //               rdata_a_o = rf_reg[j]; 
-    //endgenerate
     
     assign rdata_a_o = rf_reg[raddr_a_i];
     assign rdata_b_o = rf_reg[raddr_b_i];

@@ -10,7 +10,6 @@ module tb_sgpr();
 	logic [4:0]  waddr_a_i;
 	logic [31:0] wdata_a_i;
 	logic        we_a_i;
-	logic        signal_i;
 
 	sgpr dut
 	(
@@ -23,21 +22,19 @@ module tb_sgpr();
 		.rdata_b_o (rdata_b_o),
 		.waddr_a_i (waddr_a_i),
 		.wdata_a_i (wdata_a_i),
-		.we_a_i    (we_a_i   ),
-        .replay    (signal_i )
+		.we_a_i    (we_a_i   )
 	);
 
 	initial clk = 0;
 	always #5 clk = ~clk;
 
 	initial begin
-		$display("time | clk | waddr_a_i | wdata_a_i | rdata_a_o | rdata_b_o | signal_i |");
-		$monitor("%4d | %3b | %9d | %9d | %9d | %9d | %8b |", $time, clk, waddr_a_i, wdata_a_i, rdata_a_o, rdata_b_o, signal_i);
+		$display("time | clk | waddr_a_i | wdata_a_i | rdata_a_o | rdata_b_o |");
+		$monitor("%4d | %3b | %9d | %9d | %9d | %9d |", $time, clk, waddr_a_i, wdata_a_i, rdata_a_o, rdata_b_o);
 		rst_n     <= 0;
 		we_a_i    <= 1;
 		waddr_a_i <= 5'd10;
 		wdata_a_i <= 32'd100;
-        signal_i  <= 0;
 		#10
 		rst_n     <= 1;
 		we_a_i    <= 1;
@@ -50,6 +47,7 @@ module tb_sgpr();
 
         for (int j = 1; j < 32; j++) begin
             raddr_a_i = j;
+            raddr_b_i = j;
             #10;
         end
 		#10 $finish;
