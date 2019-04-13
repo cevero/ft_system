@@ -9,11 +9,7 @@ module tb_comparator();
 	logic [31:0] data_o;
 	logic        signal;
 	
-	comparator 
-    #(
-        .ADDR_WIDTH(5)
-    )
-    dut
+	comparator dut
 	(
 		.we_a_i(we_a_i),
 		.we_b_i(we_b_i),
