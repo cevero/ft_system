@@ -27,6 +27,8 @@ compile:
 # file.
 run:
 	$(SIM) -batch -do script/run.do work.tb_$(TOP_LEVEL)
+wave:
+	$(SIM) -do script/run_wave.do work.tb_$(TOP_LEVEL)
 
 # Removes all generated files
 clean:

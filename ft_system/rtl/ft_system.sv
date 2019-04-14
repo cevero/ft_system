@@ -17,12 +17,22 @@ module ft_system
     input  logic [ADDR_WIDTH-1:0] addr_b_i,
     input  logic [DATA_WIDTH-1:0] data_a_i,
     input  logic [DATA_WIDTH-1:0] data_b_i,
+
+
+    // address output from controller
     output logic [ADDR_WIDTH-1:0] addr_o,
-    output logic [DATA_WIDTH-1:0] data_o,
+
+    // sgpr output
+    output logic [DATA_WIDTH-1:0] rdata_o,
 
     // fetch_block_signal
     output logic                  fetch_block_o
 );
+
+    logic                  signal;
+    logic [ADDR_WIDTH-1:0] addr;
+    logic [DATA_WIDTH-1:0] data;
+    logic [ADDR_WIDTH-1:0] replay_addr;
 
     comparator comparator_module
     (
@@ -32,8 +42,8 @@ module ft_system
         .addr_b_i       (addr_b_i    ),
         .data_a_i       (data_a_i    ),
         .data_b_i       (data_b_i    ),
-        .addr_o         (addr_o      ),
-        .data_o         (data_o      ),
+        .addr_o         (addr        ),
+        .data_o         (data        ),
         .signal         (signal      )
     );
 
@@ -42,7 +52,7 @@ module ft_system
         .clk            (clk_i       ),
         .rst_n          (rst_n       ),
         .test_en_i      (test_en_i   ),
-        .raddr_a_i      (raddr_a_i   ),
+        .raddr_a_i      (replay_addr ),
         .rdata_a_o      (rdata_a_o   ),
         .raddr_b_i      (raddr_b_i   ),
         .rdata_b_o      (rdata_b_o   ),
@@ -54,8 +64,8 @@ module ft_system
     control control_module
     (
         .clk           (clk_i        ),
-        .error_i       (error_i      ),
-        .replay_addr_o (replay_addr_o),
+        .error_i       (signal       ),
+        .replay_addr_o (replay_addr  ),
         .fetch_block_o (fetch_block_o)
     );
 
