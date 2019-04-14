@@ -35,5 +35,5 @@ module control
             done <= 1;
 
     assign replay_addr_o = addr;
-    assign fetch_block_o = done;
+    assign fetch_block_o = state;
 endmodule
