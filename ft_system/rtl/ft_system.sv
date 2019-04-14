@@ -23,7 +23,7 @@ module ft_system
     output logic [ADDR_WIDTH-1:0] addr_o,
 
     // sgpr output
-    output logic [DATA_WIDTH-1:0] rdata_o,
+    output logic [DATA_WIDTH-1:0] data_o,
 
     // fetch_block_signal
     output logic                  fetch_block_o
@@ -32,7 +32,6 @@ module ft_system
     logic                  signal;
     logic [ADDR_WIDTH-1:0] addr;
     logic [DATA_WIDTH-1:0] data;
-    logic [ADDR_WIDTH-1:0] replay_addr;
 
     comparator comparator_module
     (
@@ -50,12 +49,12 @@ module ft_system
     sgpr sgpr_module
     (
         .clk            (clk_i       ),
-        .rst_n          (rst_n       ),
-        .test_en_i      (test_en_i   ),
-        .raddr_a_i      (replay_addr ),
-        .rdata_a_o      (rdata_a_o   ),
-        .raddr_b_i      (raddr_b_i   ),
-        .rdata_b_o      (rdata_b_o   ),
+        .rst_n          (            ),
+        .test_en_i      (            ),
+        .raddr_a_i      (addr_o      ),
+        .rdata_a_o      (data_o      ),
+        .raddr_b_i      (            ),
+        .rdata_b_o      (            ),
         .waddr_a_i      (addr        ),
         .wdata_a_i      (data        ),
         .we_a_i         (!signal     )
@@ -65,7 +64,7 @@ module ft_system
     (
         .clk           (clk_i        ),
         .error_i       (signal       ),
-        .replay_addr_o (replay_addr  ),
+        .replay_addr_o (addr_o       ),
         .fetch_block_o (fetch_block_o)
     );
 

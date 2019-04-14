@@ -11,7 +11,7 @@ module tb_ft_system();
     logic [DATA_WIDTH-1:0] data_a_i;
     logic [DATA_WIDTH-1:0] data_b_i;
     logic [ADDR_WIDTH-1:0] addr_o;
-    logic [DATA_WIDTH-1:0] rdata_o;
+    logic [DATA_WIDTH-1:0] data_o;
     logic                  fetch_block_o;
 	
 	ft_system dut
@@ -24,7 +24,7 @@ module tb_ft_system();
         .data_a_i      (data_a_i     ),
         .data_b_i      (data_b_i     ),
         .addr_o        (addr_o       ),
-        .rdata_o       (rdata_o      ),
+        .data_o        (data_o       ),
         .fetch_block_o (fetch_block_o)
 	);
 	
