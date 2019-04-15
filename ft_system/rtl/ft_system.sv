@@ -1,6 +1,7 @@
 `include "../sgpr/rtl/sgpr.sv"
 `include "../control/rtl/control.sv"
 `include "../comparator/rtl/comparator.sv"
+`include "../spc/rtl/spc.sv"
 
 module ft_system
 #(
@@ -18,6 +19,10 @@ module ft_system
     input  logic [DATA_WIDTH-1:0] data_a_i,
     input  logic [DATA_WIDTH-1:0] data_b_i,
 
+
+    // spc inputs and outputs
+    input  logic [DATA_WIDTH-1:0] spc_i,
+    output logic [DATA_WIDTH-1:0] spc_o,
 
     // address output from controller
     output logic [ADDR_WIDTH-1:0] addr_o,
@@ -58,6 +63,15 @@ module ft_system
         .waddr_a_i      (addr        ),
         .wdata_a_i      (data        ),
         .we_a_i         (!signal     )
+    );
+
+    spc spc_module
+    (
+	    .clk            (clk_i       ),
+	    .rst_n          (            ),
+	    .signal         (signal      ),
+	    .spc_i          (spc_i       ), 
+	    .spc_o          (spc_o       )
     );
 
     control control_module

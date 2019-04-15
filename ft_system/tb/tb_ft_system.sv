@@ -10,6 +10,10 @@ module tb_ft_system();
     logic [ADDR_WIDTH-1:0] addr_b_i;
     logic [DATA_WIDTH-1:0] data_a_i;
     logic [DATA_WIDTH-1:0] data_b_i;
+
+    logic [DATA_WIDTH-1:0] spc_i;
+    logic [DATA_WIDTH-1:0] spc_o;
+
     logic [ADDR_WIDTH-1:0] addr_o;
     logic [DATA_WIDTH-1:0] data_o;
     logic                  fetch_block_o;
@@ -23,6 +27,10 @@ module tb_ft_system();
         .addr_b_i      (addr_b_i     ),
         .data_a_i      (data_a_i     ),
         .data_b_i      (data_b_i     ),
+
+        .spc_i         (spc_i        ),
+        .spc_o         (spc_o        ),
+
         .addr_o        (addr_o       ),
         .data_o        (data_o       ),
         .fetch_block_o (fetch_block_o)
@@ -31,8 +39,8 @@ module tb_ft_system();
     initial clk_i = 0;
     always #5 clk_i = ~clk_i;
 	initial begin
-		$display("time | addr | data | fetch_block |");
-		$monitor("%4t | %4d | %4d | %11b |", $time, addr_o, data_o, fetch_block_o);
+		$display("time | pc | addr | data | fetch_block |");
+		$monitor("%4t | %2h | %4d | %4d | %11b |", $time, spc_o, addr_o, data_o, fetch_block_o);
 
         #10
         for (int i = 0; i < 32; i++) begin
@@ -42,6 +50,7 @@ module tb_ft_system();
 		    addr_b_i <= i;
 		    data_a_i <= i*10;
 		    data_b_i <= i*10;
+            spc_i    <= 32'h80;
             #10;
         end
 		    we_a_i   <= 1'b1;
