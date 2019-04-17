@@ -19,7 +19,7 @@ module control
     always_comb 
         if (error_i)
             state <= error_i;
-        else if (done)
+        else if(done)
             state <= 0;
 
     initial done = 1;
