@@ -19,7 +19,6 @@ module ft_system
     input  logic [DATA_WIDTH-1:0] data_a_i,
     input  logic [DATA_WIDTH-1:0] data_b_i,
 
-
     // spc inputs and outputs
     input  logic [DATA_WIDTH-1:0] spc_i,
     output logic [DATA_WIDTH-1:0] spc_o,

@@ -42,6 +42,12 @@ module tb_ft_system();
 		$display("time | pc | addr | data | fetch_block |");
 		$monitor("%4t | %2h | %4d | %4d | %11b |", $time, spc_o, addr_o, data_o, fetch_block_o);
 
+		we_a_i   <= 1'b0;
+		we_b_i   <= 1'b0;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd100;
+		data_b_i <= 32'd100;
         #10
         for (int i = 0; i < 32; i++) begin
 		    we_a_i   <= 1'b1;
@@ -59,6 +65,13 @@ module tb_ft_system();
 		    addr_b_i <= 5'd10;
 		    data_a_i <= 32'd100;
 		    data_b_i <= 32'd100;
-		#400 $finish;
+        #330
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b1;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd100;
+		data_b_i <= 32'd100;
+		#50 $finish;
 	end
 endmodule

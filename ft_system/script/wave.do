@@ -1,19 +1,24 @@
 onerror {resume}
 quietly WaveActivateNextPane {} 0
-add wave -noupdate :tb_ft_system:addr_a_i
-add wave -noupdate :tb_ft_system:addr_b_i
-add wave -noupdate :tb_ft_system:addr_o
+add wave -noupdate -radix unsigned :tb_ft_system:addr_a_i
+add wave -noupdate -radix unsigned :tb_ft_system:addr_b_i
+add wave -noupdate -radix unsigned :tb_ft_system:addr_o
 add wave -noupdate :tb_ft_system:clk_i
-add wave -noupdate :tb_ft_system:data_a_i
-add wave -noupdate :tb_ft_system:data_b_i
-add wave -noupdate :tb_ft_system:data_o
+add wave -noupdate -radix unsigned :tb_ft_system:data_a_i
+add wave -noupdate -radix unsigned :tb_ft_system:data_b_i
+add wave -noupdate -radix unsigned :tb_ft_system:data_o
 add wave -noupdate :tb_ft_system:fetch_block_o
 add wave -noupdate :tb_ft_system:we_a_i
 add wave -noupdate :tb_ft_system:we_b_i
+add wave -noupdate -radix hexadecimal :tb_ft_system:spc_i
+add wave -noupdate -radix hexadecimal :tb_ft_system:spc_o
+add wave -noupdate :tb_ft_system:dut:control_module:done
+add wave -noupdate :tb_ft_system:dut:control_module:state
+add wave -noupdate :tb_ft_system:dut:comparator_module:signal
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {202 ps} 0}
+WaveRestoreCursors {{Cursor 1} {541 ps} 0}
 quietly wave cursor active 1
-configure wave -namecolwidth 227
+configure wave -namecolwidth 318
 configure wave -valuecolwidth 108
 configure wave -justifyvalue left
 configure wave -signalnamewidth 0
@@ -27,4 +32,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ps
 update
-WaveRestoreZoom {0 ps} {948 ps}
+WaveRestoreZoom {0 ps} {771 ps}
