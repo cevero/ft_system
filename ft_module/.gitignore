@@ -4,5 +4,7 @@ build/!.keep
 *.ini
 *.log
 *.vcd
+*.wlf
 work
 transcript
+wlftlcDrAP
