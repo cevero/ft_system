@@ -1,4 +1,4 @@
-module tb_ft_system();
+module tb_ft_module();
 
     localparam ADDR_WIDTH = 5;
     localparam DATA_WIDTH = 2**ADDR_WIDTH;
@@ -18,7 +18,7 @@ module tb_ft_system();
     logic [DATA_WIDTH-1:0] data_o;
     logic                  fetch_block_o;
 	
-	ft_system dut
+	ft_module dut
 	(
         .clk_i         (clk_i        ),
         .we_a_i        (we_a_i       ),

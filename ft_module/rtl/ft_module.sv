@@ -3,12 +3,11 @@
 `include "../comparator/rtl/comparator.sv"
 `include "../spc/rtl/spc.sv"
 
-module ft_system
+module ft_module
 #(
     parameter ADDR_WIDTH = 5,
     parameter DATA_WIDTH = 32
-)
-(
+)(
     input  logic                  clk_i,
 
     // comparator inputs
