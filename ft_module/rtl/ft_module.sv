@@ -1,7 +1,7 @@
-`include "../sgpr/rtl/sgpr.sv"
-`include "../control/rtl/control.sv"
-`include "../comparator/rtl/comparator.sv"
-`include "../spc/rtl/spc.sv"
+`include "../../sgpr/rtl/sgpr.sv"
+`include "../../control/rtl/control.sv"
+`include "../../comparator/rtl/comparator.sv"
+`include "../../spc/rtl/spc.sv"
 
 module ft_module
 #(
