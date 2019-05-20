@@ -16,7 +16,8 @@ module tb_ft_module();
 
     logic [ADDR_WIDTH-1:0] addr_o;
     logic [DATA_WIDTH-1:0] data_o;
-    logic                  fetch_block_o;
+    logic                  halt_o;
+    logic                  resume_o;
 	
 	ft_module dut
 	(
@@ -33,14 +34,15 @@ module tb_ft_module();
 
         .addr_o        (addr_o       ),
         .data_o        (data_o       ),
-        .fetch_block_o (fetch_block_o)
+        .halt_o        (halt_o       )
+        .resume_o      (resume_o     )
 	);
 	
     initial clk_i = 0;
     always #5 clk_i = ~clk_i;
 	initial begin
-		$display("time | pc | addr | data | fetch_block |");
-		$monitor("%4t | %2h | %4d | %4d | %11b |", $time, spc_o, addr_o, data_o, fetch_block_o);
+		$display("time | pc | addr | data | halt | resume |");
+		$monitor("%4t | %2h | %4d | %4d | %4b | %6b |", $time, spc_o, addr_o, data_o, halt_o, resume_o);
 
 		we_a_i   <= 1'b0;
 		we_b_i   <= 1'b0;

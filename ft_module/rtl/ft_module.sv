@@ -29,7 +29,8 @@ module ft_module
     output logic [DATA_WIDTH-1:0] data_o,
 
     // fetch_block_signal
-    output logic                  fetch_block_o
+    output logic                  halt_o,
+    output logic                  resume_o
 );
 
     logic                  signal;
@@ -76,8 +77,9 @@ module ft_module
     (
         .clk           (clk_i        ),
         .error_i       (signal       ),
-        .replay_addr_o (addr_o       ),
-        .fetch_block_o (fetch_block_o)
+        .halt_o        (halt_o       ),
+        .resume_o      (resume_o     ),
+        .replay_addr_o (addr_o       )
     );
 
 endmodule
