@@ -33,7 +33,7 @@ module ft_module
     output logic                  resume_o
 );
 
-    logic                  signal;
+    logic                  error;
     logic [ADDR_WIDTH-1:0] addr;
     logic [DATA_WIDTH-1:0] data;
 
@@ -47,7 +47,7 @@ module ft_module
         .data_b_i       (data_b_i    ),
         .addr_o         (addr        ),
         .data_o         (data        ),
-        .signal         (signal      )
+        .error_o        (error       )
     );
 
     sgpr sgpr_module
@@ -61,14 +61,14 @@ module ft_module
         .rdata_b_o      (            ),
         .waddr_a_i      (addr        ),
         .wdata_a_i      (data        ),
-        .we_a_i         (!signal     )
+        .we_a_i         (!error      )
     );
 
     spc spc_module
     (
 	    .clk            (clk_i       ),
 	    .rst_n          (            ),
-	    .signal         (signal      ),
+	    .spc_control_i  (error       ),
 	    .spc_i          (spc_i       ), 
 	    .spc_o          (spc_o       )
     );
@@ -76,7 +76,7 @@ module ft_module
     control control_module
     (
         .clk           (clk_i        ),
-        .error_i       (signal       ),
+        .error_i       (error        ),
         .halt_o        (halt_o       ),
         .resume_o      (resume_o     ),
         .replay_addr_o (addr_o       )
