@@ -34,7 +34,7 @@ module tb_ft_module();
 
         .addr_o        (addr_o       ),
         .data_o        (data_o       ),
-        .halt_o        (halt_o       )
+        .halt_o        (halt_o       ),
         .resume_o      (resume_o     )
 	);
 	
