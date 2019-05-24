@@ -30,7 +30,8 @@ module ft_module
 
     // fetch_block_signal
     output logic                  halt_o,
-    output logic                  resume_o
+    output logic                  resume_o,
+    output logic                  shift_o
 );
 
     logic                  error;
@@ -75,10 +76,11 @@ module ft_module
 
     control control_module
     (
-        .clk           (clk_i        ),
+        .clk_i         (clk_i        ),
         .error_i       (error        ),
         .halt_o        (halt_o       ),
         .resume_o      (resume_o     ),
+        .shift_o       (shift_o      ),
         .replay_addr_o (addr_o       )
     );
 
