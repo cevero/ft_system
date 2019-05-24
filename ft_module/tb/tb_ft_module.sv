@@ -76,6 +76,6 @@ module tb_ft_module();
 		addr_b_i <= 5'd10;
 		data_a_i <= 32'd100;
 		data_b_i <= 32'd100;
-		#50 $finish;
+		#100 $finish;
 	end
 endmodule
