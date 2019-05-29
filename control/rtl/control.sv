@@ -5,6 +5,7 @@ module control
 (
     input  logic                  clk_i,
     input  logic                  error_i,
+    input  logic                  halted_i,
     output logic                  reset_o,
     output logic                  halt_o,
     output logic                  resume_o,
@@ -19,9 +20,10 @@ module control
     localparam WAIT      = 3'b000;
     localparam RESET     = 3'b001;
     localparam HALT      = 3'b010;
-    localparam WORK_SPC  = 3'b011;
-    localparam WORK_SGPR = 3'b100;
-    localparam DONE      = 3'b101;
+    localparam HALT_WAIT = 3'b011;
+    localparam WORK_SPC  = 3'b100;
+    localparam WORK_SGPR = 3'b101;
+    localparam DONE      = 3'b110;
 
     logic [2:0]            state;
     logic [ADDR_WIDTH-1:0] iterator;
@@ -37,7 +39,10 @@ module control
             RESET:
                 state <= HALT;
             HALT:
-                state <= WORK_SPC;
+                state <= HALT_WAIT;
+            HALT_WAIT:
+                if (halted_i)
+                    state <= WORK_SPC;
             WORK_SPC:
                 state <= WORK_SGPR;
             WORK_SGPR:
@@ -69,10 +74,10 @@ module control
                 halt_o <= 1;
                 shift_o <= 1;
             end
-            WORK_SPC: begin
+            HALT_WAIT:
                 halt_o <= 0;
+            WORK_SPC:
                 we_spc_o <= 1;
-            end
             WORK_SGPR: begin
                 shift_o <= 0;
                 we_sgpr_o <= 1;

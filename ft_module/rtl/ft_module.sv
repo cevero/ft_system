@@ -17,6 +17,7 @@ module ft_module
     input  logic [ADDR_WIDTH-1:0] addr_b_i,
     input  logic [DATA_WIDTH-1:0] data_a_i,
     input  logic [DATA_WIDTH-1:0] data_b_i,
+    input  logic                  halted_i,
 
     // spc inputs and outputs
     input  logic [DATA_WIDTH-1:0] spc_i,
@@ -82,6 +83,7 @@ module ft_module
     (
         .clk_i         (clk_i        ),
         .error_i       (error        ),
+        .halted_i      (halted_i     ),
         .reset_o       (reset_o      ),
         .halt_o        (halt_o       ),
         .resume_o      (resume_o     ),
