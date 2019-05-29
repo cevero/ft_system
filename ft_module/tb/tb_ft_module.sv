@@ -19,6 +19,7 @@ module tb_ft_module();
     logic                  halt_o;
     logic                  resume_o;
     logic                  shift_o;
+    logic                  reset_o;
 	
 	ft_module dut
 	(
@@ -37,14 +38,15 @@ module tb_ft_module();
         .data_o        (data_o       ),
         .halt_o        (halt_o       ),
         .resume_o      (resume_o     ),
-        .shift_o       (shift_o      )
+        .shift_o       (shift_o      ),
+        .reset_o       (reset_o      )
 	);
 	
     initial clk_i = 0;
     always #5 clk_i = ~clk_i;
 	initial begin
-		$display("time | pc | addr | data | halt | resume | shift |");
-		$monitor("%4t | %2h | %4d | %4d | %4b | %6b | %5b |", $time, spc_o, addr_o, data_o, halt_o, resume_o, shift_o);
+		$display("time | pc | addr | data | halt | resume | shift | reset |");
+		$monitor("%4t | %2h | %4d | %4d | %4b | %6b | %5b | %5b |", $time, spc_o, addr_o, data_o, halt_o, resume_o, shift_o, reset_o);
 
 		we_a_i   <= 1'b0;
 		we_b_i   <= 1'b0;

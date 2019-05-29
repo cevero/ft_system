@@ -31,7 +31,8 @@ module ft_module
     // fetch_block_signal
     output logic                  halt_o,
     output logic                  resume_o,
-    output logic                  shift_o
+    output logic                  shift_o,
+    output logic                  reset_o
 );
 
     logic                  enable;
@@ -41,7 +42,6 @@ module ft_module
 
     comparator comparator_module
     (
-        .enable_i       (enable      ),
         .we_a_i         (we_a_i      ),
         .we_b_i         (we_b_i      ),
         .addr_a_i       (addr_a_i    ),
@@ -80,7 +80,7 @@ module ft_module
     (
         .clk_i         (clk_i        ),
         .error_i       (error        ),
-        .enable_o      (enable       ),
+        .reset_o       (reset_o      ),
         .halt_o        (halt_o       ),
         .resume_o      (resume_o     ),
         .shift_o       (shift_o      ),
