@@ -37,6 +37,8 @@ module ft_module
 
     logic                  enable;
     logic                  error;
+    logic                  we_sgpr;
+    logic                  we_spc;
     logic [ADDR_WIDTH-1:0] addr;
     logic [DATA_WIDTH-1:0] data;
 
@@ -64,14 +66,14 @@ module ft_module
         .rdata_b_o      (            ),
         .waddr_a_i      (addr        ),
         .wdata_a_i      (data        ),
-        .we_a_i         (!error      )
+        .we_a_i         (we_sgpr     )
     );
 
     spc spc_module
     (
 	    .clk            (clk_i       ),
 	    .rst_n          (            ),
-	    .spc_control_i  (error       ),
+	    .spc_control_i  (we_spc      ),
 	    .spc_i          (spc_i       ), 
 	    .spc_o          (spc_o       )
     );
@@ -84,6 +86,8 @@ module ft_module
         .halt_o        (halt_o       ),
         .resume_o      (resume_o     ),
         .shift_o       (shift_o      ),
+        .we_sgpr_o     (we_sgpr      ),
+        .we_spc_o      (we_spc       ),
         .replay_addr_o (addr_o       )
     );
 

@@ -9,6 +9,8 @@ module control
     output logic                  halt_o,
     output logic                  resume_o,
     output logic                  shift_o,
+    output logic                  we_sgpr_o,
+    output logic                  we_spc_o,
     output logic [ADDR_WIDTH-1:0] replay_addr_o
 );
 
@@ -57,6 +59,8 @@ module control
                 iterator <= 0;
                 shift_o <= 0;
                 reset_o <= 1;
+                we_sgpr_o <= 0;
+                we_spc_o <= 0;
             end
             RESET:
                 reset_o <= 0;
@@ -65,12 +69,20 @@ module control
                 halt_o <= 1;
                 shift_o <= 1;
             end
-            WORK_SPC:
+            WORK_SPC: begin
                 halt_o <= 0;
-            WORK_SGPR:
+                we_spc_o <= 1;
+            end
+            WORK_SGPR: begin
                 shift_o <= 0;
-            DONE:
+                we_sgpr_o <= 1;
+                we_spc_o <= 0;
+            end
+            DONE: begin
+                we_sgpr_o <= 0;
+                we_spc_o <= 0;
                 resume_o <= 1;
+            end
         endcase
             
     assign replay_addr_o = addr;
