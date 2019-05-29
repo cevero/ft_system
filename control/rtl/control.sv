@@ -53,12 +53,12 @@ module control
                 iterator <= 0;
                 shift_o <= 0;
             end
-            HALT:
+            HALT: begin
                 halt_o <= 1;
-            WORK_SPC: begin
-                halt_o <= 0;
                 shift_o <= 1;
             end
+            WORK_SPC:
+                halt_o <= 0;
             WORK_SGPR:
                 shift_o <= 0;
             DONE:
