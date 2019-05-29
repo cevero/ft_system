@@ -5,6 +5,7 @@ module control
 (
     input  logic                  clk_i,
     input  logic                  error_i,
+    output logic                  enable_o,
     output logic                  halt_o,
     output logic                  resume_o,
     output logic                  shift_o,
@@ -52,8 +53,10 @@ module control
                 resume_o <= 0;
                 iterator <= 0;
                 shift_o <= 0;
+                enable_o <= 1;
             end
             HALT: begin
+                enable_o <= 0;
                 halt_o <= 1;
                 shift_o <= 1;
             end

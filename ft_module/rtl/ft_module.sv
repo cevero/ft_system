@@ -34,12 +34,14 @@ module ft_module
     output logic                  shift_o
 );
 
+    logic                  enable;
     logic                  error;
     logic [ADDR_WIDTH-1:0] addr;
     logic [DATA_WIDTH-1:0] data;
 
     comparator comparator_module
     (
+        .enable_i       (enable      ),
         .we_a_i         (we_a_i      ),
         .we_b_i         (we_b_i      ),
         .addr_a_i       (addr_a_i    ),
@@ -78,6 +80,7 @@ module ft_module
     (
         .clk_i         (clk_i        ),
         .error_i       (error        ),
+        .enable_o      (enable       ),
         .halt_o        (halt_o       ),
         .resume_o      (resume_o     ),
         .shift_o       (shift_o      ),
