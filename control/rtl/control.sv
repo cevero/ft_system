@@ -25,38 +25,21 @@ module control
 
     initial state = 3'b000;
 
-    //always_ff @(posedge clk_i) 
-    //    if (state == WORK) begin
-    //        iterator <= 0;
-    //        done_reg <= 0;
-    //    end else if (iterator < NUM_REG-1) begin
-    //        iterator = iterator + 1;
-    //        addr = iterator;
-    //    end else
-    //        done_reg <= 1;
-
-    //always_ff @(posedge clk_i)
-    //    if(state == WORK && done_reg) begin
-    //        shift_o <= 1;
-    //        done <= 1;
-    //    end else
-    //        shift_o <= 0;
-
     always_ff @(posedge clk_i)
         case (state)
             WAIT:
                 if (error_i)
                     state <= HALT;
             HALT:
+                state <= WORK_SPC;
+            WORK_SPC:
                 state <= WORK_SGPR;
             WORK_SGPR:
                 if (iterator < NUM_REG-1) begin
                     iterator = iterator + 1;
                     addr = iterator;
                 end else 
-                    state <= WORK_SPC;
-            WORK_SPC:
-                state <= DONE;
+                    state <= DONE;
             DONE: begin
                 state <= WAIT;
             end
@@ -72,14 +55,14 @@ module control
             end
             HALT:
                 halt_o <= 1;
-            WORK_SGPR:
+            WORK_SPC: begin
                 halt_o <= 0;
-            WORK_SPC:
                 shift_o <= 1;
-            DONE: begin
-                shift_o <= 0;
-                resume_o <= 1;
             end
+            WORK_SGPR:
+                shift_o <= 0;
+            DONE:
+                resume_o <= 1;
         endcase
             
     assign replay_addr_o = addr;
