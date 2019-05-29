@@ -63,19 +63,34 @@ module tb_ft_module();
             spc_i    <= 32'h80;
             #10;
         end
-		    we_a_i   <= 1'b1;
-		    we_b_i   <= 1'b0;
-		    addr_a_i <= 5'd10;
-		    addr_b_i <= 5'd10;
-		    data_a_i <= 32'd100;
-		    data_b_i <= 32'd100;
-        #330
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b0;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd100;
+		data_b_i <= 32'd100;
+		spc_i <= 32'h98;
+        #350
 		we_a_i   <= 1'b1;
 		we_b_i   <= 1'b1;
 		addr_a_i <= 5'd10;
 		addr_b_i <= 5'd10;
 		data_a_i <= 32'd100;
 		data_b_i <= 32'd100;
-		#100 $finish;
+        #100
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b1;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd100;
+		data_b_i <= 32'd143;
+        #350
+		we_a_i   <= 1'b1;
+		we_b_i   <= 1'b1;
+		addr_a_i <= 5'd10;
+		addr_b_i <= 5'd10;
+		data_a_i <= 32'd100;
+		data_b_i <= 32'd100;
+		#500 $finish;
 	end
 endmodule

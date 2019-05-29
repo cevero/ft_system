@@ -15,8 +15,8 @@ module control
 
     localparam WAIT      = 3'b000;
     localparam HALT      = 3'b001;
-    localparam WORK_SGPR = 3'b010;
-    localparam WORK_SPC  = 3'b011;
+    localparam WORK_SPC  = 3'b010;
+    localparam WORK_SGPR = 3'b011;
     localparam DONE      = 3'b100;
 
     logic [2:0]            state;
