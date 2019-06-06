@@ -67,8 +67,10 @@ module control
                 we_sgpr_o <= 0;
                 we_spc_o <= 0;
             end
-            RESET:
+            RESET: begin
                 reset_o <= 0;
+                we_spc_o <= 1;
+            end
             HALT: begin
                 reset_o <= 1;
                 halt_o <= 1;
@@ -76,8 +78,6 @@ module control
             end
             HALT_WAIT:
                 halt_o <= 0;
-            WORK_SPC:
-                we_spc_o <= 1;
             WORK_SGPR: begin
                 shift_o <= 0;
                 we_sgpr_o <= 1;
