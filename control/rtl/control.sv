@@ -25,13 +25,11 @@ module control
     localparam WORK_SGPR = 3'b101;
     localparam DONE      = 3'b110;
 
-    logic [2:0]            state;
+    logic [2:0]            state = 3'b000;
     logic [ADDR_WIDTH-1:0] iterator;
     logic [ADDR_WIDTH-1:0] addr;
 
-    initial state = 3'b000;
-
-    always_ff @(posedge clk_i)
+    always_ff @(posedge clk_i) begin
         case (state)
             WAIT:
                 if (error_i)
@@ -56,7 +54,6 @@ module control
             end
         endcase
 
-    always @(state)
         case (state)
             WAIT: begin
                 halt_o <= 0;
@@ -89,6 +86,7 @@ module control
                 resume_o <= 1;
             end
         endcase
-            
+    end
+
     assign replay_addr_o = addr;
 endmodule
